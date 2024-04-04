@@ -28,7 +28,7 @@
 
     <EditText
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/input_email"
+        android:id="@+id/create_username"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
@@ -43,7 +43,7 @@
 
     <EditText
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/input_password"
+        android:id="@+id/create_password"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
@@ -71,18 +71,6 @@
         android:textAppearance="@style/log_in_button"
         android:gravity="center_horizontal|top"
         android:backgroundTint="@color/green"
-        />
-
-    <TextView
-        android:id="@+id/forgot_your"
-        android:layout_width="178dp"
-        android:layout_height="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="303dp"
-        android:text="@string/forgot_your"
-        android:textAppearance="@style/forgot_your"
-        android:gravity="top"
         />
 
     <TextView

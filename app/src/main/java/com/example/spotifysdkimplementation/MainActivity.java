@@ -2,7 +2,6 @@ package com.example.spotifysdkimplementation;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -14,16 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.spotifysdkimplementation.databinding.LoginPageBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.spotify.sdk.android.auth.AuthorizationClient;
@@ -71,21 +62,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.login_page);
 
         Button loginPage = findViewById(R.id.button_prim);
-        inputEmail = findViewById(R.id.input_email);
-        inputPassword = findViewById(R.id.input_password);
+        inputEmail = findViewById(R.id.create_username);
+        inputPassword = findViewById(R.id.create_password);
         createAccount = findViewById((R.id.don_t_have_));
 
         loginPage.setOnClickListener(v -> {
             checkUserExists(inputEmail.getText().toString(), inputPassword.getText().toString());
         });
 
-//        createAccount.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, AccountCreationPage.class);
-//                startActivity(intent);
-//            }
-//        });
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AccountCreationPage.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void checkUserExists(String email, String password) {

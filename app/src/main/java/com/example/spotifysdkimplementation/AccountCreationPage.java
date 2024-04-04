@@ -4,8 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -13,36 +18,75 @@ import com.example.spotifysdkimplementation.databinding.AccountCreationPageBindi
 import com.example.spotifysdkimplementation.databinding.LoginPageBinding;
 import com.example.spotifysdkimplementation.databinding.LoginPageBinding;
 
-public class AccountCreationPage extends Fragment {
+public class AccountCreationPage extends AppCompatActivity {
     private AccountCreationPageBinding binding;
+    private Button confirmCreation;
+    private EditText username, password, confirmPassword;
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.account_creation_page);
 
-        binding = AccountCreationPageBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        username = findViewById(R.id.create_username);
+        password = findViewById(R.id.create_password);
+        confirmPassword = findViewById(R.id.confirm_create_password);
+        confirmCreation = findViewById(R.id.confirm_creation);
+
+        confirmCreation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String p1 = password.toString();
+                String p2 = confirmPassword.toString();
+
+                boolean passwordsMatch = false;
+                if ((p1.equals(p2))) {
+                    passwordsMatch = true;
+                } else {
+                    Toast.makeText(AccountCreationPage.this, "Passwords do not match",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-//        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(LoginPage.this)
-//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-//            }
-//        });
+    public void onResume() {
+        super.onResume();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onDestroy() {
+        super.onDestroy();
     }
+
+//    @Override
+//    public View onCreateView(
+//            LayoutInflater inflater, ViewGroup container,
+//            Bundle savedInstanceState
+//    ) {
+//
+//
+//        binding = AccountCreationPageBinding.inflate(inflater, container, false);
+//        return binding.getRoot();
+//
+//    }
+//
+//    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//
+////        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                NavHostFragment.findNavController(LoginPage.this)
+////                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+////            }
+////        });
+//    }
+//
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        binding = null;
+//    }
 
 }

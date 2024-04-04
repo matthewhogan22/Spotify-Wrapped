@@ -83,23 +83,21 @@
         />
 
     <EditText
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/input_email"
+        android:id="@+id/create_username"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="21dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="21dp"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="21dp"
         android:layout_marginTop="128dp"
-        android:hint="@string/email"
+        android:layout_marginRight="21dp"
         android:background="@drawable/textfieldbackground"
-        />
+        android:hint="Username" />
 
     <EditText
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/input_password"
+        android:id="@+id/create_password"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
@@ -114,7 +112,7 @@
 
     <EditText
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/confirm_password"
+        android:id="@+id/confirm_create_password"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
