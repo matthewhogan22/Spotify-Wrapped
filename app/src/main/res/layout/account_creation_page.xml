@@ -93,7 +93,7 @@
         android:layout_marginTop="128dp"
         android:layout_marginRight="21dp"
         android:background="@drawable/textfieldbackground"
-        android:hint="Username" />
+        android:hint="Email" />
 
     <EditText
         xmlns:android="http://schemas.android.com/apk/res/android"

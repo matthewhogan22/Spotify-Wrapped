@@ -1,5 +1,7 @@
 package com.example.spotifysdkimplementation;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +21,21 @@ import com.example.spotifysdkimplementation.databinding.AccountCreationPageBindi
 import com.example.spotifysdkimplementation.databinding.LoginPageBinding;
 import com.example.spotifysdkimplementation.databinding.LoginPageBinding;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.spotify.sdk.android.auth.AuthorizationClient;
+import com.spotify.sdk.android.auth.AuthorizationRequest;
+import com.spotify.sdk.android.auth.AuthorizationResponse;
+
 public class AccountCreationPage extends AppCompatActivity {
     private AccountCreationPageBinding binding;
     private Button confirmCreation;
     private EditText username, password, confirmPassword;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser toBeAdded;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +52,7 @@ public class AccountCreationPage extends AppCompatActivity {
             public void onClick(View v) {
                 String p1 = password.getText().toString();
                 String p2 = confirmPassword.getText().toString();
+                String user = username.getText().toString();
 
                 boolean passwordsMatch = false;
                 if ((p1.equals(p2))) {
@@ -47,10 +61,14 @@ public class AccountCreationPage extends AppCompatActivity {
                     Toast.makeText(AccountCreationPage.this, "Passwords do not match",
                             Toast.LENGTH_SHORT).show();
                 }
-                if (passwordsMatch && (username.getText().toString().length() > 0)) {
+                if (passwordsMatch && (user.length() > 0 && user.contains("@") && user.contains(".com"))) {
                     Log.d("Account", "Made");
-                    createAccount(username.getText().toString(), password.getText().toString());
+                    createAccount(user, p1);
+                } else {
+                    Toast.makeText(AccountCreationPage.this, "Issue with email/password",
+                            Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -66,6 +84,33 @@ public class AccountCreationPage extends AppCompatActivity {
 
     private void createAccount(String user, String pass) {
         //NEED TO IMPLEMENT FIREBASE USER CREATION HERE
+        mAuth.createUserWithEmailAndPassword(user, pass)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign up success, update UI with the signed-in user's information
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        // Proceed with further actions (e.g., saving user data to the database)
+                        getCode();
+                    } else {
+                        // If sign up fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(AccountCreationPage.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void getCode() {
+        final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.CODE);
+        AuthorizationClient.openLoginActivity(AccountCreationPage.this, 1, request);
+    }
+
+    private AuthorizationRequest getAuthenticationRequest(AuthorizationResponse.Type type) {
+        return new AuthorizationRequest.Builder("d857953ebaca4345b0be666d38a4037c", type, "spotifysdkimplementation://auth")
+                .setShowDialog(false)
+                .setScopes(new String[] { "user-read-email", "user-top-read" }) // <--- Change the scope of your requested token here
+                .setCampaign("your-campaign-token")
+                .build();
     }
 
 //    @Override
