@@ -1,6 +1,7 @@
 package com.example.spotifysdkimplementation;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,8 @@ public class AccountCreationPage extends AppCompatActivity {
         confirmCreation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String p1 = password.toString();
-                String p2 = confirmPassword.toString();
+                String p1 = password.getText().toString();
+                String p2 = confirmPassword.getText().toString();
 
                 boolean passwordsMatch = false;
                 if ((p1.equals(p2))) {
@@ -45,6 +46,10 @@ public class AccountCreationPage extends AppCompatActivity {
                 } else {
                     Toast.makeText(AccountCreationPage.this, "Passwords do not match",
                             Toast.LENGTH_SHORT).show();
+                }
+                if (passwordsMatch && (username.getText().toString().length() > 0)) {
+                    Log.d("Account", "Made");
+                    createAccount(username.getText().toString(), password.getText().toString());
                 }
             }
         });
@@ -57,6 +62,10 @@ public class AccountCreationPage extends AppCompatActivity {
 
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    private void createAccount(String user, String pass) {
+        //NEED TO IMPLEMENT FIREBASE USER CREATION HERE
     }
 
 //    @Override
