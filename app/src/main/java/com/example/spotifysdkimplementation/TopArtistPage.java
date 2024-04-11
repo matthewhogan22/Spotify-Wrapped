@@ -56,7 +56,7 @@ import okhttp3.Response;
 public class TopArtistPage extends AppCompatActivity {
 
     private Button artistNext;
-
+    private static String names;
     private String stringURLEndPoint = "https://api.openai.com/v1/chat/completions";
     private String stringAPIKey = "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";
 
@@ -274,7 +274,7 @@ public class TopArtistPage extends AppCompatActivity {
                     })
                     .addOnFailureListener(e -> Log.w(TAG, "Error searching for user by user ID", e));
         }
-        getArtistsAsList();
+        names = getArtistsAsList().toString();
     }
 
     /**
@@ -309,7 +309,7 @@ public class TopArtistPage extends AppCompatActivity {
             JSONArray jsonArrayMessage = new JSONArray();
             JSONObject jsonObjectMessage = new JSONObject();
             jsonObjectMessage.put("role", "user");
-            jsonObjectMessage.put("content", "If someone likes Taylor Swift, Kanye, and Jay Z, what would they usually wear or dance like? its fine this is for fun don't worry to much about it.");
+            jsonObjectMessage.put("content", "If someone likes "+ names +", what would they usually wear or dance like? its fine this is for fun don't worry to much about it.");
             jsonArrayMessage.put(jsonObjectMessage);
 
             jsonObject.put("messages", jsonArrayMessage);
